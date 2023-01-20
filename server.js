@@ -10,11 +10,6 @@ app.use(express.json());
 app.use(cors());
 mongoose.set("strictQuery", true);
 
-app.use(express.static(path.join(__dirname, "./build")));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "./build/index.html"));
-});
-
 mongoose
   .connect(
     "mongodb+srv://gopu:guitar95@cluster0.ymnff1o.mongodb.net/mern-todo",
@@ -70,6 +65,11 @@ app.put("/todo/complete/:id", async (req, res) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+});
+
+app.use(express.static(path.join(__dirname, "./build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "./build/index.html"));
 });
 
 app.listen(3001, () => console.log("SERVER IS LIVE AT PORT 3001"));
